@@ -14,6 +14,7 @@ const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
 const SAVING = "SAVING";
+const EDIT = "EDIT";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
 
@@ -52,11 +53,21 @@ export default function Appointment({
       {mode === CREATE && (
         <Form interviewers={interviewers} onCancel={back} onSave={save} />
       )}
+      {mode === EDIT && (
+        <Form
+          name={interview.student}
+          interviewer={interview.interviewer.id}
+          interviewers={interviewers}
+          onCancel={back}
+          onSave={save}
+        />
+      )}
       {mode === SHOW && (
         <Show
           student={interview.student}
           interviewer={interview.interviewer}
           onDelete={() => transition(CONFIRM)}
+          onEdit={() => transition(EDIT)}
         />
       )}
       {mode === CONFIRM && (

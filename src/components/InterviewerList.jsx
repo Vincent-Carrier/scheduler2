@@ -14,6 +14,7 @@ export default function InterviewerList({
       <ul className="interviewers__list">
         {interviewers.map(({ id, avatar, name }) => (
           <InterviewerListItem
+            key={id}
             id={id}
             avatar={avatar}
             name={name}
