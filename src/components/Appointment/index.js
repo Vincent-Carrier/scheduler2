@@ -17,6 +17,8 @@ const SAVING = "SAVING";
 const EDIT = "EDIT";
 const DELETING = "DELETING";
 const CONFIRM = "CONFIRM";
+const ERROR_SAVE = "ERROR_SAVE";
+const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment({
   id,
@@ -34,16 +36,24 @@ export default function Appointment({
       interviewer
     };
     transition(SAVING);
-    bookInterview(id, interview).then(() => {
-      transition(SHOW);
-    });
+    bookInterview(id, interview)
+      .then(() => {
+        transition(SHOW);
+      })
+      .catch(err => {
+        transition(ERROR_SAVE);
+      });
   }
 
   function deleteInterview() {
     transition(DELETING);
-    cancelInterview(id).then(() => {
-      transition(EMPTY);
-    });
+    cancelInterview(id)
+      .then(() => {
+        transition(EMPTY);
+      })
+      .catch(err => {
+        transition(ERROR_DELETE);
+      });
   }
 
   return (
@@ -79,6 +89,20 @@ export default function Appointment({
       )}
       {mode === SAVING && <Status message="Saving" />}
       {mode === DELETING && <Status message="Deleting" />}
+      {mode === ERROR_DELETE && (
+        <Error
+          message="Could not cancel appointment"
+          onClose={() => transition(SHOW, true)}
+        />
+      )}
+      {mode === ERROR_SAVE && (
+        <Error
+          message="Could not save your changes"
+          onClose={() =>
+            interview ? transition(SHOW, true) : transition(EMPTY, true)
+          }
+        />
+      )}
     </article>
   );
 }
