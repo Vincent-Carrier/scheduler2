@@ -12,6 +12,7 @@ export default function DayList({ days, day, setDay }) {
       {days &&
         days.map(_day => (
           <DayListItem
+            key={_day.name}
             name={_day.name}
             spots={_day.spots}
             selected={_day.name === day}
