@@ -13,6 +13,8 @@ import useVisualMode from "../../hooks/useVisualMode";
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+const SAVING = "SAVING";
+const DELETING = "DELETING";
 
 export default function Appointment({
   id,
@@ -28,8 +30,10 @@ export default function Appointment({
       student: name,
       interviewer
     };
-    bookInterview(id, interview);
-    transition(SHOW);
+    transition(SAVING)
+    bookInterview(id, interview).then(() => {
+      transition(SHOW);
+    });
   }
 
   return (
@@ -42,6 +46,8 @@ export default function Appointment({
       {mode === SHOW && (
         <Show student={interview.student} interviewer={interview.interviewer} />
       )}
+      {mode === SAVING && <Status message="Saving" />}
+      {mode === DELETING && <Status message="Deleting" />}
     </article>
   );
 }
