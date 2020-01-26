@@ -1,8 +1,28 @@
-import { useState, useEffect } from "react";
+import { useReducer, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
-  const [state, setState] = useState({
+  const SET_DAY = "SET_DAY";
+  const SET_APPLICATION_DATA = "SET_APPLICATION_DATA";
+  const SET_INTERVIEW = "SET_INTERVIEW";
+
+  function reducer(state, action) {
+    switch (action.type) {
+      case SET_DAY:
+        return { ...state, day: action.day };
+      case SET_APPLICATION_DATA:
+        return { ...state, ...action.application_data };
+      case SET_INTERVIEW: {
+        return { ...state, interview: action.interview };
+      }
+      default:
+        throw new Error(
+          `Tried to reduce with unsupported action type: ${action.type}`
+        );
+    }
+  }
+
+  const [state, dispatch] = useReducer(reducer, {
     day: "Monday",
     days: [],
     appointments: {},
@@ -10,7 +30,7 @@ export default function useApplicationData() {
   });
 
   const setDay = day => {
-    setState(prev => ({ ...prev, day }));
+    dispatch({ type: SET_DAY, day });
   };
 
   useEffect(() => {
@@ -21,7 +41,10 @@ export default function useApplicationData() {
     ])
       .then(responses => {
         const [days, appointments, interviewers] = responses.map(r => r.data);
-        setState(prev => ({ ...prev, days, appointments, interviewers }));
+        dispatch({
+          type: SET_APPLICATION_DATA,
+          application_data: { days, appointments, interviewers }
+        });
       })
       .catch(err => console.log(err));
   }, []);
@@ -36,7 +59,7 @@ export default function useApplicationData() {
       [id]: appointment
     };
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
-      setState({ ...state, appointments });
+      dispatch({ type: SET_INTERVIEW, interview });
     });
   }
 
@@ -50,9 +73,13 @@ export default function useApplicationData() {
       [id]: appointment
     };
     return axios.delete(`/api/appointments/${id}`).then(() => {
-      setState({ ...state, appointments });
+      // TODO
+      dispatch({
+        type: SET_APPLICATION_DATA,
+        application_data: { appointments }
+      });
     });
   }
 
-  return { state, setDay, bookInterview, cancelInterview }
+  return { state, setDay, bookInterview, cancelInterview };
 }
