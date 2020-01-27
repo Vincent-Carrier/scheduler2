@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-import Button from "../Button";
+import Button from '../Button';
 
 export default function Confirm({ message, onConfirm, onCancel }) {
   return (

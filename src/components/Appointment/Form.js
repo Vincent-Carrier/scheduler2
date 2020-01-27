@@ -1,19 +1,19 @@
-import React, { useState } from "react";
-import InterviewerList from "../InterviewerList";
-import Button from "../Button";
+import React, { useState } from 'react';
+import InterviewerList from '../InterviewerList';
+import Button from '../Button';
 
 export default function Form({
   interviewers,
   interviewer: _interviewer,
   name: _name,
   onSave,
-  onCancel
+  onCancel,
 }) {
   const [interviewer, setInterviewer] = useState(_interviewer || null);
-  const [name, setName] = useState(_name || "");
+  const [name, setName] = useState(_name || '');
 
   const reset = () => {
-    setName("");
+    setName('');
     setInterviewer(null);
   };
 
@@ -25,20 +25,21 @@ export default function Form({
   return (
     <main className="appointment__card appointment__card--create">
       <section className="appointment__card-left">
-        <form autoComplete="off" onSubmit={event => event.preventDefault()}>
+        <form autoComplete="off" onSubmit={(event) => event.preventDefault()}>
           <input
             className="appointment__create-input text--semi-bold"
             name="name"
             type="text"
             value={name}
             placeholder="Enter Student Name"
-            onChange={e => setName(e.target.value)}
+            onChange={(e) => setName(e.target.value)}
+            data-testid="student-name-input"
           />
         </form>
         <InterviewerList
           interviewers={interviewers}
           interviewer={interviewer}
-          setInterviewer={setInterviewer}
+          onChange={setInterviewer}
         />
       </section>
       <section className="appointment__card-right">

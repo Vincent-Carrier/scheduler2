@@ -1,7 +1,7 @@
-import React from "react";
-import classNames from "classnames";
+import React from 'react';
+import classNames from 'classnames';
 // import "components/DayList.scss";
-import DayListItem from "components/DayListItem";
+import DayListItem from 'components/DayListItem';
 
 export default function DayList({ days, day, setDay }) {
   // const dayClass = classNames('day-list', {
@@ -9,8 +9,8 @@ export default function DayList({ days, day, setDay }) {
 
   return (
     <ul>
-      {days &&
-        days.map(_day => (
+      {days
+        && days.map((_day) => (
           <DayListItem
             key={_day.name}
             name={_day.name}

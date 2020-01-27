@@ -1,24 +1,24 @@
-import React from "react";
+import React from 'react';
 
-import "./styles.scss";
-import Confirm from "./Confirm";
-import Empty from "./Empty";
-import Error from "./Error";
-import Form from "./Form";
-import Header from "./Header";
-import Show from "./Show";
-import Status from "./Status";
-import useVisualMode from "../../hooks/useVisualMode";
+import './styles.scss';
+import Confirm from './Confirm';
+import Empty from './Empty';
+import Error from './Error';
+import Form from './Form';
+import Header from './Header';
+import Show from './Show';
+import Status from './Status';
+import useVisualMode from '../../hooks/useVisualMode';
 
-const EMPTY = "EMPTY";
-const SHOW = "SHOW";
-const CREATE = "CREATE";
-const SAVING = "SAVING";
-const EDIT = "EDIT";
-const DELETING = "DELETING";
-const CONFIRM = "CONFIRM";
-const ERROR_SAVE = "ERROR_SAVE";
-const ERROR_DELETE = "ERROR_DELETE";
+const EMPTY = 'EMPTY';
+const SHOW = 'SHOW';
+const CREATE = 'CREATE';
+const SAVING = 'SAVING';
+const EDIT = 'EDIT';
+const DELETING = 'DELETING';
+const CONFIRM = 'CONFIRM';
+const ERROR_SAVE = 'ERROR_SAVE';
+const ERROR_DELETE = 'ERROR_DELETE';
 
 export default function Appointment({
   id,
@@ -26,21 +26,21 @@ export default function Appointment({
   interview,
   interviewers,
   bookInterview,
-  cancelInterview
+  cancelInterview,
 }) {
   const { mode, transition, back } = useVisualMode(interview ? SHOW : EMPTY);
 
   function save(name, interviewer) {
     const interview = {
       student: name,
-      interviewer
+      interviewer,
     };
     transition(SAVING);
     bookInterview(id, interview)
       .then(() => {
         transition(SHOW);
       })
-      .catch(err => {
+      .catch((err) => {
         transition(ERROR_SAVE);
       });
   }
@@ -51,7 +51,7 @@ export default function Appointment({
       .then(() => {
         transition(EMPTY);
       })
-      .catch(err => {
+      .catch((err) => {
         transition(ERROR_DELETE);
       });
   }
@@ -98,9 +98,7 @@ export default function Appointment({
       {mode === ERROR_SAVE && (
         <Error
           message="Could not save your changes"
-          onClose={() =>
-            interview ? transition(SHOW, true) : transition(EMPTY, true)
-          }
+          onClose={() => (interview ? transition(SHOW, true) : transition(EMPTY, true))}
         />
       )}
     </article>

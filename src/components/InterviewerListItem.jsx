@@ -1,16 +1,16 @@
-import React from "react";
-import classNames from "classnames";
-import "components/InterviewerListItem.scss";
+import React from 'react';
+import classNames from 'classnames';
+import 'components/InterviewerListItem.scss';
 
 export default function InterviewListItem({
   id,
   name,
   avatar,
   setInterviewer,
-  selected
+  selected,
 }) {
-  const itemClass = classNames("interviewers__item", {
-    "interviewers__item--selected": selected
+  const itemClass = classNames('interviewers__item', {
+    'interviewers__item--selected': selected,
   });
   return (
     <li key={id} className={itemClass} onClick={() => setInterviewer(id)}>
