@@ -73,7 +73,6 @@ export default function useApplicationData() {
       [id]: appointment,
     };
     return axios.delete(`/api/appointments/${id}`).then(() => {
-      // TODO
       dispatch({
         type: SET_APPLICATION_DATA,
         application_data: { appointments },

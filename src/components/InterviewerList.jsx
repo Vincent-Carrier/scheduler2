@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 export default function InterviewerList({
   interviewer,
   interviewers,
-  setInterviewer,
+  onChange,
 }) {
   return (
     <section className="interviewers">
@@ -20,7 +20,7 @@ export default function InterviewerList({
             avatar={avatar}
             name={name}
             selected={id === interviewer}
-            onChange={setInterviewer}
+            onChange={onChange}
           />
         ))}
       </ul>

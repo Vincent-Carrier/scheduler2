@@ -6,14 +6,14 @@ export default function InterviewListItem({
   id,
   name,
   avatar,
-  setInterviewer,
+  onChange,
   selected,
 }) {
   const itemClass = classNames('interviewers__item', {
     'interviewers__item--selected': selected,
   });
   return (
-    <li key={id} className={itemClass} onClick={() => setInterviewer(id)}>
+    <li key={id} className={itemClass} onClick={() => onChange(id)}>
       <img className="interviewers__item-image" src={avatar} alt={name} />
       {selected && name}
     </li>
