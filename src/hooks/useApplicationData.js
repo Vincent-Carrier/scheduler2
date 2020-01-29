@@ -14,10 +14,10 @@ export default function useApplicationData() {
         return { ...state, ...action.application_data };
       case SET_INTERVIEW: {
         const { id, interview } = action;
-        const appointments = { ...state.appointments, id: interview };
-        const day = state.days.find(d => d.name === state.day);
-        day.appointments.push(id);
-        const days = [...state.days, day];
+        const appointments = { ...state.appointments, [id]: { ...state.appointments[id], interview} };
+        const dayIndex = state.days.findIndex(d => d.name === state.day);
+        const days = [...state.days];
+        days[dayIndex].appointments.push(id);
         return { ...state, appointments, days };
       }
       default:
@@ -54,13 +54,13 @@ export default function useApplicationData() {
       .catch(err => console.log(err));
   }, []);
 
-  async function bookInterview(id, interview) {
+  function bookInterview(id, interview) {
     return axios.put(`/api/appointments/${id}`, { interview }).then(() => {
       dispatch({ type: SET_INTERVIEW, id, interview });
     });
   }
 
-  async function cancelInterview(id) {
+  function cancelInterview(id) {
     const appointment = {
       ...state.appointments[id],
       interview: null
