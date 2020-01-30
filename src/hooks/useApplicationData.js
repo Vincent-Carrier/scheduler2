@@ -1,4 +1,5 @@
 import { useReducer, useEffect } from "react";
+import produce from "immer";
 import axios from "axios";
 
 export default function useApplicationData() {
@@ -13,12 +14,12 @@ export default function useApplicationData() {
       case SET_APPLICATION_DATA:
         return { ...state, ...action.application_data };
       case SET_INTERVIEW: {
-        const { id, interview } = action;
-        const appointments = { ...state.appointments, [id]: { ...state.appointments[id], interview} };
-        const dayIndex = state.days.findIndex(d => d.name === state.day);
-        const days = [...state.days];
-        days[dayIndex].appointments.push(id);
-        return { ...state, appointments, days };
+        return produce(state, draft => {
+          const { id, interview } = action;
+          draft.appointments[id].interview = interview;
+          const dayIndex = state.days.findIndex(d => d.name === state.day);
+          draft.days[dayIndex].spots -= 1;
+        })
       }
       default:
         throw new Error(
