@@ -16,9 +16,11 @@ export default function useApplicationData() {
       case SET_INTERVIEW: {
         return produce(state, draft => {
           const { id, interview } = action;
+          const edit = draft.appointments[id].interview
           draft.appointments[id].interview = interview;
           const dayIndex = state.days.findIndex(d => d.name === state.day);
-          draft.days[dayIndex].spots -= 1;
+          if (interview && !edit) draft.days[dayIndex].spots -= 1;
+          if (interview === null) draft.days[dayIndex].spots += 1;
         });
       }
       default:
