@@ -19,7 +19,7 @@ export default function useApplicationData() {
           draft.appointments[id].interview = interview;
           const dayIndex = state.days.findIndex(d => d.name === state.day);
           draft.days[dayIndex].spots -= 1;
-        })
+        });
       }
       default:
         throw new Error(
@@ -62,14 +62,6 @@ export default function useApplicationData() {
   }
 
   function cancelInterview(id) {
-    const appointment = {
-      ...state.appointments[id],
-      interview: null
-    };
-    const appointments = {
-      ...state.appointments,
-      [id]: appointment
-    };
     return axios.delete(`/api/appointments/${id}`).then(() => {
       dispatch({
         type: SET_INTERVIEW,
