@@ -28,6 +28,10 @@ export default function Form({
       setError("Student name cannot be blank");
       return;
     }
+    if (interviewer === null) {
+      setError("You must select an interviewer");
+      return;
+    }
 
     onSave(name, interviewer);
   }
