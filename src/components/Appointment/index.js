@@ -38,7 +38,6 @@ export default function Appointment({
     transition(SAVING);
     bookInterview(id, _interview)
       .then(() => {
-        console.log("interview", interview, "_interview", _interview);
         transition(SHOW);
       })
       .catch(err => {
