@@ -11,7 +11,10 @@ A web app that lets you schedule an interview when and with whom you want.
 
 ## Screenshots
 
+Viewing existing appointments
 ![Day View](screenshots/dayview.png)
+
+Adding an appointments
 ![Add View](screenshots/addview.png)
 
 ## Setup
