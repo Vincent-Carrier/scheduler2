@@ -1,13 +1,12 @@
-import React from 'react';
-import classNames from 'classnames';
-import 'components/InterviewerList.scss';
-import InterviewerListItem from 'components/InterviewerListItem';
-import PropTypes from 'prop-types';
+import React from "react";
+import "components/InterviewerList.scss";
+import InterviewerListItem from "components/InterviewerListItem";
+import PropTypes from "prop-types";
 
 export default function InterviewerList({
   interviewer,
   interviewers,
-  onChange,
+  onChange
 }) {
   return (
     <section className="interviewers">
